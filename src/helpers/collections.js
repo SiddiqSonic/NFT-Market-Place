@@ -72,8 +72,8 @@ export const networkCollections = {
     {
       image:
         "https://sov4nxuxgz71.usemoralis.com:2053/server/files/1lHRghK2KvhvHNkoKxiA9SWXsH3RxytBjsOrbqxw/b6bc653fd5575b7a473478b58a3bc4a1_Rifle_Aim.png",
-      name: "Rifel",
-      addrs: "0x7CfB75D1Bf1Fa485596E4Cb241B3b3Aba18C5e95",
+      name: "Dreax",
+      addrs: "0x2255817e3DaD904774Bb8333668CB4A2Ea948373",
     },
   ],
 };

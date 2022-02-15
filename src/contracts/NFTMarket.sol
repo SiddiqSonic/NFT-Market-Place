@@ -44,6 +44,18 @@ contract Market {
 
 	uint private _listingId = 0;
 	mapping(uint => Listing) private _listings;
+	address Owner;
+	uint Percentage;
+
+
+	function setOwner(address _owner) external{
+		Owner = _owner;
+	}
+
+	function setPercentage(uint _percentage) external{
+		Percentage = _percentage / 100 ;
+	}
+
 	function listToken(address token, uint tokenId, uint price, uint256 quantity) external {
         require(price > 0, "Price must be greater than 0");
 		ERC1155(token).safeTransferFrom(msg.sender, address(this), tokenId, quantity,"");
@@ -69,7 +81,7 @@ contract Market {
             quantity
 		);
 	}
-
+	
 	function getListing(uint listingId) public view returns (Listing memory) {
 		return _listings[listingId];
 	}
@@ -82,11 +94,16 @@ contract Market {
 
 		require(msg.value >= listing.price, "Insufficient payment");
 
-		listing.status = ListingStatus.Sold;
 
 		ERC1155(listing.token).safeTransferFrom(address(this), msg.sender, listing.tokenId, quantity,"");
-		payable(listing.seller).transfer(listing.price);
-
+		
+		if(listing.seller == Owner){
+			payable(listing.seller).transfer(listing.price);
+		}
+		else{
+			payable(Owner).transfer(Percentage * listing.price); //Transfer the commision to the site owner
+			payable(listing.seller).transfer(listing.price);     //Transfer the payment to the seller
+		}
 		emit Sale(
 			listingId,
 			msg.sender,
@@ -109,4 +126,16 @@ contract Market {
 
 		emit Cancel(listingId, listing.seller);
 	}
+
+	function onERC1155Received(address, address, uint256, uint256, bytes memory) public virtual returns (bytes4) {
+        return this.onERC1155Received.selector;
+    }
+
+    function onERC1155BatchReceived(address, address, uint256[] memory, uint256[] memory, bytes memory) public virtual returns (bytes4) {
+        return this.onERC1155BatchReceived.selector;
+    }
+
+    function onERC721Received(address, address, uint256, bytes memory) public virtual returns (bytes4) {
+        return this.onERC721Received.selector;
+    }
 }

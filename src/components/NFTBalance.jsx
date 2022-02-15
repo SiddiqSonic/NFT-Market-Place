@@ -6,6 +6,7 @@ import { FileSearchOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { useMoralisDapp } from "providers/MoralisDappProvider/MoralisDappProvider";
 import { getExplorer } from "helpers/networks";
 import { useWeb3ExecuteFunction } from "react-moralis";
+import NumericInput from 'react-numeric-input';
 const { Meta } = Card;
 
 const styles = {
@@ -22,18 +23,49 @@ const styles = {
 
 function NFTBalance() {
   const { NFTBalance, fetchSuccess } = useNFTBalance();
-  const { chainId, marketAddress, contractABI } = useMoralisDapp();
+  const { chainId, marketAddress, contractABI,walletAddress,NFTAddress,NftcontractABI } = useMoralisDapp();
   const { Moralis } = useMoralis();
   const [visible, setVisibility] = useState(false);
   const [nftToSend, setNftToSend] = useState(null);
   const [price, setPrice] = useState(1);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
   const [loading, setLoading] = useState(false);
   const contractProcessor = useWeb3ExecuteFunction();
   const contractABIJson = JSON.parse(contractABI);
+  const NftcontractABIJson = JSON.parse(NftcontractABI);
   const listItemFunction = "listToken"; //name of function in smart contact
+  const balanceOfFunction = "balanceOf" //name of function in smart contact
   const ItemImage = Moralis.Object.extend("ItemImages");
 
+  
+
+  //Interacting Actual smart contarct in this function 
+  async function GetBalanceOf(nft) {
+    console.log(nft);
+    const ops = {
+      contractAddress: nft.token_address, //samrt contract address of NFT.sol (collection address)
+      functionName: balanceOfFunction, //name of function in smart contact
+      abi: NftcontractABIJson,
+      params: {
+        account: walletAddress,
+        id: nft.token_id,
+      },
+    };
+    console.log(ops);
+    await contractProcessor.fetch({
+      params: ops,
+      onSuccess: (data) => {
+        console.log("success");
+        console.log(data);
+        setQuantity(data);
+
+        },
+      onError: (error) => {
+        console.log(error);
+      },
+     
+    });
+  }
 
   //Interacting Actual smart contarct in this function 
   async function list(nft, listPrice,listQuantity) {
@@ -53,7 +85,7 @@ function NFTBalance() {
 
     await contractProcessor.fetch({
       params: ops,
-      onSuccess: () => {
+      onSuccess: (data) => {
         console.log("success");
         setLoading(false);
         setVisibility(false);
@@ -96,6 +128,7 @@ function NFTBalance() {
   }
 
   const handleSellClick = (nft) => {
+    GetBalanceOf(nft);
     setNftToSend(nft);
     setVisibility(true);
   };
@@ -225,7 +258,7 @@ function NFTBalance() {
           <Button onClick={() => approveAll(nftToSend)} type="primary">
             Approve
           </Button>,
-          <Button onClick={() => list(nftToSend, price, quantity)} type="primary">
+          <Button onClick={() => list(nftToSend, price,quantity)} type="primary">
             List
           </Button>
         ]}
@@ -248,7 +281,11 @@ function NFTBalance() {
           <Input
             autoFocus
             placeholder="Quantity"
-            onChange={(e) => setQuantity(e.target.value)}
+            type="text"
+            min={1}
+            max={100}
+            value = {quantity}
+            // onChange={(e) => setQuantity(e.target.value)}
           />
         </Spin>
       </Modal>

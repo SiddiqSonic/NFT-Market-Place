@@ -69,10 +69,12 @@ function NFTTokenIds({ inputValue, setInputValue }) {
   const contractABIJson = JSON.parse(contractABI);
   const { Moralis } = useMoralis();
   const queryMarketItems = useMoralisQuery("ListMarketItems");
+
   const fetchMarketItems = JSON.parse(
     JSON.stringify(queryMarketItems.data, [
       "objectId",
       "createdAt",
+      "listingId",
       "price",
       "token", //nftcontract_address 
       "itemId",
@@ -83,7 +85,7 @@ function NFTTokenIds({ inputValue, setInputValue }) {
       "confirmed",
     ])
   );
-  const purchaseItemFunction = "createMarketSale";
+  const purchaseItemFunction = "buyToken";
   const NFTCollections = getCollectionsByChain(chainId);
 
   async function purchase() {
@@ -91,13 +93,15 @@ function NFTTokenIds({ inputValue, setInputValue }) {
     const tokenDetails = getMarketItem(nftToBuy);
     const itemID = tokenDetails.itemId;
     const tokenPrice = tokenDetails.price;
+    const listingId = tokenDetails.listingId;
+    const quantity = 1;
     const ops = {
       contractAddress: marketAddress,
       functionName: purchaseItemFunction,
       abi: contractABIJson,
       params: {
-        nftContract: nftToBuy.token_address,
-        itemId: itemID,
+        listingId: listingId,
+        quantity: quantity,
       },
       msgValue: tokenPrice,
     };
@@ -147,11 +151,12 @@ function NFTTokenIds({ inputValue, setInputValue }) {
   }
 
   async function updateSoldMarketItem() {
-    const id = getMarketItem(nftToBuy).objectId;
-    const marketList = Moralis.Object.extend("MarketItems");
+    const tokenDetails = getMarketItem(nftToBuy); 
+    const id = tokenDetails.objectId;
+    const marketList = Moralis.Object.extend("ListMarketItems");
     const query = new Moralis.Query(marketList);
     await query.get(id).then((obj) => {
-      obj.set("sold", true);
+      obj.set("quantity", ""+tokenDetails.quantity -1);
       obj.set("owner", walletAddress);
       obj.save();
     });
@@ -163,7 +168,8 @@ function NFTTokenIds({ inputValue, setInputValue }) {
         e.token === nft?.token_address &&
         e.tokenId === nft?.token_id &&
         e.quantity > 0 &&
-        e.confirmed === true
+        e.confirmed === true &&
+        e.seller === "0x7d4d3a74139301da74f0eb9fc97b40240c120b4b"
     );
     console.log(result);
     return result;
@@ -281,9 +287,47 @@ function NFTTokenIds({ inputValue, setInputValue }) {
                   <Badge.Ribbon text="Buy Now" color="green"></Badge.Ribbon>
                 )}
                 <Meta title={nft.name} description={`Token Id : ${nft.token_id}`} />
-                <Meta description={`Amount : ${nft.amount}`} />
+                <Meta description={`Amount : ${getMarketItem(nft).quantity}`} />
               </Card>
             ))}
+            {/* {inputValue !== "explore" &&
+            NFTTokenIds.slice(0, 20).map((nft, index) => (
+              <Card
+                hoverable
+                actions={[
+                  <Tooltip title="View On Blockexplorer">
+                    <FileSearchOutlined
+                      onClick={() =>
+                        window.open(
+                          `${getExplorer(chainId)}address/${nft.token_address}`,
+                          "_blank"
+                        )
+                      }
+                    />
+                  </Tooltip>,
+                  <Tooltip title="Buy NFT">
+                    <ShoppingCartOutlined onClick={() => handleBuyClick(nft)} />
+                  </Tooltip>,
+                ]}
+                style={{ width: 240, border: "2px solid #e7eaf3" }}
+                cover={
+                  <Image
+                    preview={false}
+                    src={nft.image || "error"}
+                    fallback={fallbackImg}
+                    alt=""
+                    style={{ height: "240px" }}
+                  />
+                }
+                key={index}
+              >
+                {getMarketItem(nft) && (
+                  <Badge.Ribbon text="Buy Now" color="green"></Badge.Ribbon>
+                )}
+                <Meta title={nft.name} description={`Token Id : ${nft.token_id}`} />
+                <Meta description={`Amount : ${getMarketItem(nft).quantity}`} />
+              </Card>
+            ))} */}
         </div>
         {getMarketItem(nftToBuy) ? (
           <Modal
