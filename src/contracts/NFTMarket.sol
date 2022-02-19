@@ -44,10 +44,10 @@ contract Market {
 
 	uint private _listingId = 0;
 	mapping(uint => Listing) private _listings;
-	address Owner;
-	uint Percentage;
+	address Owner = 0xDa4E9AE390720DE2b73d2520bBda344aEaCbEFD8;
+	uint Percentage = 1;
 
-
+ 
 	function setOwner(address _owner) external{
 		Owner = _owner;
 	}

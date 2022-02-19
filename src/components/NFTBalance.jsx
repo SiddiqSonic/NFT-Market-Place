@@ -209,7 +209,7 @@ function NFTBalance() {
             <div style={{ marginBottom: "10px" }}></div>
           </>
         )}
-        {NFTBalance &&
+        {NFTBalance && 
           NFTBalance.map((nft, index) => (
             <Card
               hoverable

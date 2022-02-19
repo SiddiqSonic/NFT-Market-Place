@@ -37,29 +37,14 @@ export const useNFTTokenIds = (addr) => {
               .then((response) => response.json())
               .then((data) => {
                 NFT.image = resolveLink(data.result.nft_image.url);
+                NFT.model = resolveLink(data.result.Model.url);
                 NFT.name = data.result.Name;
                 console.log("Data = ", data);
                 console.log( NFT);
               });
           } catch (error) {
             setFetchSuccess(false);
-              
-/*          !!Temporary work around to avoid CORS issues when retrieving NFT images!!
-            Create a proxy server as per https://dev.to/terieyenike/how-to-create-a-proxy-server-on-heroku-5b5c
-            Replace <your url here> with your proxy server_url below
-            Remove comments :)
 
-              try {
-                await fetch(`<your url here>/${NFT.token_uri}`)
-                .then(response => response.json())
-                .then(data => {
-                  NFT.image = resolveLink(data.image);
-                });
-              } catch (error) {
-                setFetchSuccess(false);
-              }
-
- */
           }
         }
       }
