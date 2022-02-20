@@ -54,6 +54,9 @@ const App = ({ isServerInfo }) => {
             <Route path="/Transactions">
               <NFTMarketTransactions />
             </Route>
+            <Route path="/mint">
+              <NFTMint />
+            </Route>
           </Switch>
           
           <div style={styles.headerRight}>

@@ -33,7 +33,8 @@ const Layout =({children}) =>{
                             <div className="collapse navbar-collapse" id="navbarCollapse">
                                 <div className="navbar-nav">
                                     <a href="#" className="nav-item nav-link active" style={{color: "white"}}>Home</a>
-        
+                                    <NavLink to='/nftBalance' className="nav-item nav-link active" style={{color: "white"}}>Your Collection</NavLink>
+                                    <NavLink to='/mint' className="nav-item nav-link active" style={{color: "white"}}>Mint</NavLink>
                                 </div>
                                 <div className="navbar-nav ms-auto">
                                     {!isAuthenticated ?  
@@ -50,7 +51,7 @@ const Layout =({children}) =>{
                         <div className=" ">
                             <NavLink to='/MetaPlayer' className="btncolor btn btn-secondary">Meta Players</NavLink>
                             <NavLink to='' className="btncolor btn btn-secondary">Guns</NavLink>
-                            <NavLink to='/nftBalance' className="btncolor btn btn-secondary">NFT's Box (comming soon)</NavLink>
+                            <NavLink to='' className="btncolor btn btn-secondary">NFT's Box (comming soon)</NavLink>
                             <NavLink to='' className="btncolor btn btn-secondary">Car (comming soon)</NavLink>
                             <NavLink to='' className="btncolor btn btn-secondary">Walls (comming soon)</NavLink>
                         </div>

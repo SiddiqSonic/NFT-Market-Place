@@ -39,12 +39,12 @@ function NFTMint({ inputValue, setInputValue }) {
     const [NftQuantity, setNftQuantity] = useState();
 
     const MintNftFunction = "mint"; //name of function in smart contact
-
+    const EnabelMintFunction = "setIsMintEnable"; //name of function in smart contact
 
     async function Mint(Nftid,Quantity) {
       setLoading(true);
       const ops = {
-        contractAddress: "0x33bD01A9C5d8c361FA7dF97C255C5a1504443E5F",
+        contractAddress: "0xd57b1e431984c49807F134CBc0E43ab0E1223eA8",
         functionName: MintNftFunction, //name of function in smart contact
         abi: NftcontractABIJson,
         params: {
@@ -65,6 +65,34 @@ function NFTMint({ inputValue, setInputValue }) {
           console.log(error);
           setLoading(false);
           failMint();
+        },
+      });
+    }
+
+
+    async function EnabelMint() {
+      setLoading(true);
+      const ops = {
+        contractAddress: "0xd57b1e431984c49807F134CBc0E43ab0E1223eA8",
+        functionName: EnabelMintFunction, //name of function in smart contact
+        abi: NftcontractABIJson,
+        params: {
+          value: true,
+        },
+      };
+  
+      await contractProcessor.fetch({
+        params: ops,
+        onSuccess: (data) => {
+          console.log("success");
+          setLoading(false);
+          setVisibility(false);
+          succEnabelMint();
+        },
+        onError: (error) => {
+          console.log(error);
+          setLoading(false);
+          failEnabelMint();
         },
       });
     }
@@ -90,7 +118,27 @@ function NFTMint({ inputValue, setInputValue }) {
         modal.destroy();
       }, secondsToGo * 1000);
     }
+    function succEnabelMint() {
+      let secondsToGo = 5;
+      const modal = Modal.success({
+        title: "Success!",
+        content: `Your NFT Minting is Enabeld on the marketplace`,
+      });
+      setTimeout(() => {
+        modal.destroy();
+      }, secondsToGo * 1000);
+    }
 
+    function failEnabelMint() {
+      let secondsToGo = 5;
+      const modal = Modal.error({
+        title: "Error!",
+        content: `There was a problem Enabel Minting your NFT`,
+      });
+      setTimeout(() => {
+        modal.destroy();
+      }, secondsToGo * 1000);
+    }
 
     const handleChange = (e) => {
       const { name, value } = e.target;
@@ -108,6 +156,12 @@ function NFTMint({ inputValue, setInputValue }) {
       console.log(e.target.value);
       setMintFormValues({...MintformValues ,[name]: value });
     };
+
+
+    const EnabelMinthandleSubmit = (e) => {
+      EnabelMint();
+    };
+
     const MinthandleSubmit = (e) => {
       
       setMintFormErrors(validateMint(MintformValues));
@@ -179,6 +233,13 @@ function NFTMint({ inputValue, setInputValue }) {
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Input  type="submit" value="MINT NFT" />
+        </Form.Item>
+      </Form>
+
+
+      <Form onFinish={EnabelMinthandleSubmit}>
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+        <Input  type="submit" value="Enabel Mint" />
         </Form.Item>
       </Form>
     </>
