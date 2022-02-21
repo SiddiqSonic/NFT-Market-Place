@@ -42,6 +42,9 @@ const App = ({ isServerInfo }) => {
     <Layout>
        
       <Switch>
+          <Route exact path="/">
+                <Redirect to="/MetaPlayer" />
+            </Route>
             <Route path="/nftBalance">
               <NFTBalance />
             </Route>

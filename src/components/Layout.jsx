@@ -51,9 +51,9 @@ const Layout =({children}) =>{
                         <div className=" ">
                             <NavLink to='/MetaPlayer' className="btncolor btn btn-secondary">Meta Players</NavLink>
                             <NavLink to='' className="btncolor btn btn-secondary">Guns</NavLink>
-                            <NavLink to='' className="btncolor btn btn-secondary">NFT's Box (comming soon)</NavLink>
-                            <NavLink to='' className="btncolor btn btn-secondary">Car (comming soon)</NavLink>
-                            <NavLink to='' className="btncolor btn btn-secondary">Walls (comming soon)</NavLink>
+                            <NavLink to='' className="btncolor btn btn-secondary">NFT's Box (coming soon)</NavLink>
+                            <NavLink to='' className="btncolor btn btn-secondary">Car (coming soon)</NavLink>
+                            <NavLink to='' className="btncolor btn btn-secondary">Walls (coming soon)</NavLink>
                         </div>
                         <hr/>
                     </div>
@@ -64,5 +64,6 @@ const Layout =({children}) =>{
        
     )
 }
+ 
 
 export default Layout;

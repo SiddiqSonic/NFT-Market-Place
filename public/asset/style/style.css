@@ -112,7 +112,7 @@
      border-radius: 10px;
  }
  
- span {
+ .span {
      color: black;
      background: linear-gradient(318deg, #85e43f, #44c323);
      padding: 2px;

@@ -268,7 +268,25 @@ if (path == "Buy"){
               {getMarketItem(nft) && (
                 <NavLink to={`/buy/${getMarketItem(nft).objectId}`} onClick={setnft(nft)}>
                   <div className="  mynft m-3 ">
-                    <p className=" m-3 p-1  tag "><span className="">Meta Players</span> <img src="asset/images/attack.png" alt="" className="power p1 ml-2" /> <img src="asset/images/attack.png" alt="" className="power p2 ml-2" /></p>
+                    <div className=" m-3 p-1  tag  ">
+                      <div className="row">
+                        <div className="col-md-5" >
+                        <span   className="span ">Meta Players</span> 
+                        </div>
+
+                        <div className="col-md-4" >
+                        <img src="asset/images/attack.png" alt="" className="power p1 ml-2" /> 
+
+                        </div>
+
+                        <div className="col-md-3" >
+                        <img src="asset/images/attack.png" alt="" className="power p2 ml-2" />
+
+                        </div>
+                     
+                      </div>
+                    
+                    </div>
                     <img src={nft?.image || "error"} className="character" alt="" />
                     <p className="chinfo"> #{nft.token_id} {nft.name}</p>
                     <h5 className="chinfo">  {getMarketItem(nft).price / ("1e" + 18)} {nativeName}</h5>
@@ -284,7 +302,7 @@ if (path == "Buy"){
           
           <div data-v-ee1d93aa="" data-v-c42fc3ce="" className="cat-page">
             <div data-v-47e5a974="" data-v-ee1d93aa="" className="market-category" data-v-c42fc3ce="">
-              <div data-v-47e5a974="" className="menu-view" style={{ background: "linear-gradient(6deg,purple, #1819EF)" }}> <a data-v-47e5a974="" href="./index.html" className="router-link-active menu-item-pets">
+              <div data-v-47e5a974="" className="menu-view" style={{ background: "linear-gradient(6deg,purple, #1819EF)" }}> <a data-v-47e5a974=""  className="router-link-active menu-item-pets">
                 Nft Characters
               </a> </div>
               <div data-v-47e5a974="" classNameName="dropdown-view">
@@ -302,7 +320,7 @@ if (path == "Buy"){
                   <div data-v-c7994836="" className="aside-left">
                     <section data-v-c7994836="" className="section-item nft-info">
                       <div data-v-c7994836="" className="infos">
-                        <div data-v-c7994836="" className="title"><span data-v-c7994836="" className="token-id-m">#1</span>Meta Planet</div>
+                        <div data-v-c7994836="" className="title span col-md-6"><span data-v-c7994836="" className="token-id-m">#1</span  >Meta Planet</div>
                       </div>
                       <div data-v-c7994836="" className="token-id">
                         <div data-v-c7994836="" className="element-values">
@@ -322,7 +340,7 @@ if (path == "Buy"){
                       <div data-v-1db83116="" data-v-c7994836="" className="price-info
                                               price-com-info"> <span data-v-1db83116="" className="amount">
                           <img src="asset/images/bnb.png" style={{ width: "22px", height: "20px" }} alt="" />{getNft(id).price/ ("1e" + 18)} </span>
-                          <span data-v-1db83116="" className="usd-value"> ≈ $106</span></div>
+                          </div>
                           <a onClick={() => purchase(id)} 
                           data-v-c7994836="" className="common-button button-44 button-primary">BUY NOW
                           </a>
@@ -330,7 +348,7 @@ if (path == "Buy"){
                   </div>
                   <div data-v-c7994836="" className="aside-right">
                     <section data-v-c7994836="" className="section-item">
-                      <div data-v-c7994836="" className="title">GROWTH POTENTIAL<span data-v-c7994836="" className="title-text" style={{ color: "rgb(136, 173,219)" }}>(406)</span></div>
+                      <div data-v-c7994836="" className="title">GROWTH POTENTIAL<span data-v-c7994836="" className="title-text" style={{ color: "rgb(136, 173,219)" }}>(320)</span></div>
                       <div data-v-c7994836="" className="element-list">
                         <div data-v-c7994836="" className="data-item">
                           <div data-v-c7994836="" className="s-title">ATTACK</div>
