@@ -32,7 +32,7 @@ const Layout =({children}) =>{
                             </button>
                             <div className="collapse navbar-collapse" id="navbarCollapse">
                                 <div className="navbar-nav">
-                                    <a href="#" className="nav-item nav-link active" style={{color: "white"}}>Home</a>
+                                <NavLink to='/' className="nav-item nav-link active" style={{color: "white"}}>Home</NavLink>
                                     <NavLink to='/nftBalance' className="nav-item nav-link active" style={{color: "white"}}>Your Collection</NavLink>
                                     <NavLink to='/mint' className="nav-item nav-link active" style={{color: "white"}}>Mint</NavLink>
                                 </div>
