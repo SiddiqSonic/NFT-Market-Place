@@ -19,6 +19,7 @@ import { useMoralisDapp } from "providers/MoralisDappProvider/MoralisDappProvide
 import { getExplorer } from "helpers/networks";
 import { useWeb3ExecuteFunction } from "react-moralis";
 import { NavLink ,useParams} from "react-router-dom";
+
 const { Meta } = Card;
 
 const styles = {
@@ -33,7 +34,8 @@ function NFTTokenIds({ inputValue, setInputValue,Mynft, setnft, path,match }) {
   const [visible, setVisibility] = useState(false);
   const [nftToBuy, setNftToBuy] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [ModelUrl,setModelurl] = useState();
+  const [NFTData,setNFTData] = useState();
+  
   const contractProcessor = useWeb3ExecuteFunction();
   const { chainId, marketAddress, contractABI, walletAddress } =
     useMoralisDapp();
@@ -54,6 +56,7 @@ function NFTTokenIds({ inputValue, setInputValue,Mynft, setnft, path,match }) {
       "nft_id",
       "Name",
       "Model",
+      "HEALTH",
     ])
   );
   const fetchMarketItems = JSON.parse(
@@ -113,7 +116,10 @@ function NFTTokenIds({ inputValue, setInputValue,Mynft, setnft, path,match }) {
     console.log(nft.image);
     setVisibility(true);
   };
-
+  const handleOnClick = (nft) => {
+    console.log("OnClick",nft);
+    setnft(nft);
+  };
   function succPurchase() {
     let secondsToGo = 5;
     const modal = Modal.success({
@@ -147,7 +153,7 @@ function NFTTokenIds({ inputValue, setInputValue,Mynft, setnft, path,match }) {
       obj.save();
     });
   }
-
+var MarketList = "" ;
   const getMarketItem = (nft) => {
   
     const result = fetchMarketItems?.find(
@@ -159,6 +165,7 @@ function NFTTokenIds({ inputValue, setInputValue,Mynft, setnft, path,match }) {
         // e.seller === "0xac30cef569992203cf1766c788752305d689c814"
     );
     console.log(result);
+    MarketList = result;
     return result;
   };
 
@@ -171,31 +178,48 @@ function NFTTokenIds({ inputValue, setInputValue,Mynft, setnft, path,match }) {
     console.log(result);
     return result;
   };
+
+  const getNftOnBuy = (tokenid) => {
+    console.log(tokenid);
+    const result = fetchNftModel?.find(
+      (e) =>
+        e.nft_id == tokenid
+    );
+    console.log(result);
+    return result;
+  };
+
   async function getNftModel(nfturl){
     console.log("Model");
     console.log(nfturl);
-    var modelurl = "";
+    var nft ={};
     try {
       await fetch(nfturl)
         .then((response) => response.json())
         .then((data) => {
-          modelurl = resolveLink(data.result.Model.url);
+          nft.name = data.result.Name;
+          nft.tokenId = data.result.nft_id;
           console.log("lfkjd")
           console.log(data);
         });
     } catch (error) {
       console.log(error);
     }
-    setModelurl(modelurl.toString());
-    console.log(modelurl);
-    return modelurl;
+    setNFTData(nft);
+    console.log(nft);
+    return nft;
   };
-if (path == "Buy"){
-  const nftid = getNft(id).tokenId;
-  const hex = parseInt(nftid, 10).toString(16)
-  getNftModel("https://fwekh9wzvkvb.usemoralis.com:2053/server/functions/getNFT?_ApplicationId=CdZGKv5yJnL12xgL7436851bq4OFjW9UsdHodRs0&id="+hex);
+
+
+  var my_nft = "";
+    if (path === "Buy"){
+      my_nft = getNft(id);
+        const hex = parseInt(my_nft.tokenId, 10).toString(16)
+       // getNftModel("https://fwekh9wzvkvb.usemoralis.com:2053/server/functions/getNFT?_ApplicationId=CdZGKv5yJnL12xgL7436851bq4OFjW9UsdHodRs0&id="+hex);
+      }
+ 
+ 
   
-}
 
   return (
     <>
@@ -228,45 +252,11 @@ if (path == "Buy"){
 
         {path !== "Buy" &&
           NFTTokenIds.slice(0, 20).map((nft, index) => (
-            // <Card
-            //   hoverable
-            //   actions={[
-            //     <Tooltip title="View On Blockexplorer">
-            //       <FileSearchOutlined
-            //         onClick={() =>
-            //           window.open(
-            //             `${getExplorer(chainId)}address/${nft.token_address}`,
-            //             "_blank"
-            //           )
-            //         }
-            //       />
-            //     </Tooltip>,
-            //     <Tooltip title="Buy NFT">
-            //       <ShoppingCartOutlined onClick={() => handleBuyClick(nft)} />
-            //     </Tooltip>,
-            //   ]}
-            //   style={{ width: 240, border: "2px solid #e7eaf3" }}
-            //   cover={
-            //     <Image
-            //       preview={false}
-            //       src={nft.image || "error"}
-            //       fallback={fallbackImg}
-            //       alt=""
-            //       style={{ height: "240px" }}
-            //     />
-            //   }
-            //   key={index}
-            // >
-            //   {getMarketItem(nft) && (
-            //     <Badge.Ribbon text="Buy Now" color="green"></Badge.Ribbon>
-            //   )}
-            //   <Meta title={nft.name} description={`Token Id : ${nft.token_id}`} />
-            //   <Meta description={`Amount : `} />
-            // </Card>
+            
 
             <div>
               {getMarketItem(nft) && (
-                <NavLink to={`/buy/${getMarketItem(nft).objectId}`} onClick={setnft(nft)}>
+                <NavLink to={`/buy/${MarketList.objectId}`} onClick={handleOnClick(nft)}>
                   <div className="  mynft m-3 ">
                     <div className=" m-3 p-1  tag  ">
                       <div className="row">
@@ -275,7 +265,7 @@ if (path == "Buy"){
                         </div>
 
                         <div className="col-md-4" >
-                        <img src="asset/images/attack.png" alt="" className="power p1 ml-2" /> 
+                        <img src="asset/images/protection.png" alt="" className="power p1 ml-2" /> 
 
                         </div>
 
@@ -287,10 +277,10 @@ if (path == "Buy"){
                       </div>
                     
                     </div>
-                    <img src={nft?.image || "error"} className="character" alt="" />
+                     <img src={nft?.image || "error"} className="character" alt="" />
                     <p className="chinfo"> #{nft.token_id} {nft.name}</p>
-                    <h5 className="chinfo">  {getMarketItem(nft).price / ("1e" + 18)} {nativeName}</h5>
-                    <h5 className="chinfo"> {getMarketItem(nft).quantity}</h5>
+                    <h5 className="chinfo">  {MarketList.price / ("1e" + 18)} BNB</h5>
+                    <h5 className="chinfo"> {MarketList.quantity}</h5>
                   </div>
                 </NavLink>
               )}
@@ -298,7 +288,7 @@ if (path == "Buy"){
 
           ))
         }
-        {path === "Buy" &&
+        {path === 'Buy' &&
           
           <div data-v-ee1d93aa="" data-v-c42fc3ce="" className="cat-page">
             <div data-v-47e5a974="" data-v-ee1d93aa="" className="market-category" data-v-c42fc3ce="">
@@ -309,7 +299,7 @@ if (path == "Buy"){
                 <div data-v-4ebee254="" data-v-47e5a974="" className="tabs-view tab-menus">
                   <div data-v-4ebee254="" className="tab-list"><a data-v-4ebee254="" className="tab-item
                                           selected"><span data-v-4ebee254="" className="icon" style={{ backgroundImage: "url(&quot;/img/icon-category-pets.dad24f21.png&quot)" }} >
-                    </span>Nft Characters</a><a data-v-4ebee254="" className="tab-item
+                    </span> Nft Characters</a><a data-v-4ebee254="" className="tab-item
                                           has-tooltip" data-original-title="null"><span data-v-4ebee254="" className="icon" style={{ backgroundImage: "url(&quot;/img/icon-category-lends.5de98e6f.png&quot;)" }}></span></a></div>
                 </div>
               </div>
@@ -320,26 +310,28 @@ if (path == "Buy"){
                   <div data-v-c7994836="" className="aside-left">
                     <section data-v-c7994836="" className="section-item nft-info">
                       <div data-v-c7994836="" className="infos">
-                        <div data-v-c7994836="" className="title span col-md-6"><span data-v-c7994836="" className="token-id-m">#1</span  >Meta Planet</div>
+                        <div data-v-c7994836="" className="title span col-md-6"><span data-v-c7994836="" className="token-id-m">#1</span  >{getNftOnBuy(my_nft.tokenId).Name }</div>
                       </div>
                       <div data-v-c7994836="" className="token-id">
                         <div data-v-c7994836="" className="element-values">
                           <div data-v-c7994836="" className="element"><img data-v-c7994836="" src="https://d1vyp5kjqdxn2l.cloudfront.net/cdnstatic/img/d98b76406dc6884ed7168a722ab85217.png" /></div>
                           <div data-v-c7994836="" className="element"><img data-v-c7994836="" src="https://d1vyp5kjqdxn2l.cloudfront.net/cdnstatic/img/47f78123e1490c84f5bc883f7b5771aa.png" /></div>
-                        </div><span data-v-c7994836="" className="id-text">#1</span></div>
+                        </div><span data-v-c7994836="" className="id-text">#{my_nft.tokenId}</span></div>
                     </section>
                     <div data-v-c7994836="" className="cover-view">
                       <div data-v-c7994836="" className="stars">
                         <div data-v-32540007="" data-v-c7994836="" className="stars-widget
                                                   stars-large"></div>
                       </div>
-                      <model-viewer alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum" src={`${ModelUrl}`} poster="shared-assets/models/NeilArmstrong.webp" seamless-poster="" shadow-intensity="1" camera-controls="" ar-status="not-presenting"></model-viewer>
+                      <model-viewer alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum" src={`asset/gltf/${my_nft.tokenId}.gltf`} poster="shared-assets/models/NeilArmstrong.webp" seamless-poster="" shadow-intensity="1" camera-controls="" ar-status="not-presenting"></model-viewer>
                     </div>
                     {/* ModelUrl */}
                     <div data-v-c7994836="" className="market-info">
-                      <div data-v-1db83116="" data-v-c7994836="" className="price-info
-                                              price-com-info"> <span data-v-1db83116="" className="amount">
-                          <img src="asset/images/bnb.png" style={{ width: "22px", height: "20px" }} alt="" />{getNft(id).price/ ("1e" + 18)} </span>
+                      <div data-v-1db83116="" data-v-c7994836="" className="price-info price-com-info"> 
+                      <span data-v-1db83116="" className="amount d-flex">
+                          <img src="asset/images/bnb.png" style={{ width: "22px", height: "20px"}} alt="" />
+                          <div className="mx-3">{my_nft.price/ ("1e" + 18)} </div>
+                      </span>
                           </div>
                           <a onClick={() => purchase(id)} 
                           data-v-c7994836="" className="common-button button-44 button-primary">BUY NOW

@@ -50,10 +50,10 @@ const Layout =({children}) =>{
                     <div className="col-md-12 p-3">
                         <div className=" ">
                             <NavLink to='/MetaPlayer' className="btncolor btn btn-secondary">Meta Players</NavLink>
-                            <NavLink to='' className="btncolor btn btn-secondary">Guns</NavLink>
-                            <NavLink to='' className="btncolor btn btn-secondary">NFT's Box (coming soon)</NavLink>
-                            <NavLink to='' className="btncolor btn btn-secondary">Car (coming soon)</NavLink>
-                            <NavLink to='' className="btncolor btn btn-secondary">Walls (coming soon)</NavLink>
+                            <NavLink to='/Guns' className="btncolor btn btn-secondary">Guns</NavLink>
+                            <NavLink to='/NftBox' className="btncolor btn btn-secondary">NFT's Box (coming soon)</NavLink>
+                            <NavLink to='/Car' className="btncolor btn btn-secondary">Car (coming soon)</NavLink>
+                            <NavLink to='/Walls' className="btncolor btn btn-secondary">Walls (coming soon)</NavLink>
                         </div>
                         <hr/>
                     </div>

@@ -20,6 +20,8 @@ import "./style.css";
 import Text from "antd/lib/typography/Text";
 import NFTMarketTransactions from "components/NFTMarketTransactions";
 import Layout from "components/Layout"
+import Commingsoon from "components/commingsoon";
+
 
 const styles = {
  
@@ -51,7 +53,7 @@ const App = ({ isServerInfo }) => {
             <Route path="/MetaPlayer">
               <NFTTokenIds inputValue={inputValue} setInputValue={setInputValue} nft={nft} setnft={setnft} path = {"MetaPlayer"}/>
             </Route>
-            <Route path="/Buy/:id">
+            <Route path="/buy/:id">
               <NFTTokenIds inputValue={inputValue} setInputValue={setInputValue} Mynft={nft} setnft={setnft} path = {"Buy"}/>
             </Route>
             <Route path="/Transactions">
@@ -59,6 +61,18 @@ const App = ({ isServerInfo }) => {
             </Route>
             <Route path="/mint">
               <NFTMint />
+            </Route>
+            <Route path="/Guns">
+            <Commingsoon />
+            </Route>
+            <Route path="/NftBox">
+            <Commingsoon />
+            </Route>
+            <Route path="/Car">
+            <Commingsoon />
+            </Route>
+            <Route path="/Walls">
+            <Commingsoon />
             </Route>
           </Switch>
           
