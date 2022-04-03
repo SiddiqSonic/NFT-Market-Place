@@ -33,7 +33,7 @@ export const useNFTBalance = (options) => {
               .then((data) => {
                 NFT.image = resolveLink(data.result.nft_image.url);
                 NFT.name = data.result.Name;
-                console.log(data);
+                
               });
           } catch (error) {
             setFetchSuccess(false);

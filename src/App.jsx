@@ -26,7 +26,7 @@ import Commingsoon from "components/commingsoon";
 const styles = {
  
 };
-const App = ({ isServerInfo }) => {
+const App = ({ isServerInfo , match }) => {
   const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
     useMoralis();
 
@@ -53,7 +53,7 @@ const App = ({ isServerInfo }) => {
             <Route path="/MetaPlayer">
               <NFTTokenIds inputValue={inputValue} setInputValue={setInputValue} nft={nft} setnft={setnft} path = {"MetaPlayer"}/>
             </Route>
-            <Route path="/buy/:id">
+            <Route path={"/buy/:id"}>
               <NFTTokenIds inputValue={inputValue} setInputValue={setInputValue} Mynft={nft} setnft={setnft} path = {"Buy"}/>
             </Route>
             <Route path="/Transactions">

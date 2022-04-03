@@ -43,8 +43,7 @@ export const useNFTTokenIds = (addr) => {
                 console.log("Image URL "+NFT.image);
                 NFT.model = resolveLink(data.result.Model.url);
                 NFT.name = data.result.Name;
-                console.log("Data = ", data);
-                console.log( NFT);
+               
               });
           } catch (error) {
             setFetchSuccess(false);
