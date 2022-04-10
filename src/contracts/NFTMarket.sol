@@ -125,7 +125,7 @@ contract Market is Ownable {
 	}
 
 	function setPercentage(uint _percentage) external onlyOwner{
-		Percentage = _percentage / 100 ;
+		Percentage = _percentage;
 	}
 
 	function listToken(address token, uint tokenId, uint price, uint256 tokenAmount, uint256 quantity) external {
@@ -182,8 +182,8 @@ contract Market is Ownable {
 			payable(listing.seller).transfer(listing.price);
 		}
 		else{
-			payable(nftOwner).transfer(Percentage * listing.price); //Transfer the commision to the site nft owner
-			payable(listing.seller).transfer(listing.price - Percentage * listing.price);     //Transfer the payment to the seller
+			payable(nftOwner).transfer(Percentage * listing.price / 100); //Transfer the commision to the site nft owner
+			payable(listing.seller).transfer(listing.price - Percentage * listing.price / 100);     //Transfer the payment to the seller
 		}
 		emit Sale(
 			listingId,
@@ -215,8 +215,8 @@ contract Market is Ownable {
 		else{
 			// transfer native token from user's wallet to nftowner and seller
 			ERC20(nativeToken).transferFrom(msg.sender, address(this), listing.tokenAmount);
-			ERC20(nativeToken).transfer(nftOwner, Percentage * listing.tokenAmount);
-			ERC20(nativeToken).transfer(listing.seller, listing.tokenAmount - Percentage * listing.tokenAmount );
+			ERC20(nativeToken).transfer(nftOwner, Percentage * listing.tokenAmount / 100);
+			ERC20(nativeToken).transfer(listing.seller, listing.tokenAmount - Percentage * listing.tokenAmount / 100 );
 		}
 
 		emit Sale(
