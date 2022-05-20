@@ -79,6 +79,7 @@ function NFTBalance() {
         token: nft.token_address,
         tokenId: nft.token_id,
         price: String(p),
+        tokenAmount: String(p),
         quantity : listQuantity
       },
     };
@@ -94,6 +95,7 @@ function NFTBalance() {
       },
       onError: (error) => {
         setLoading(false);
+        console.log(error);
         failList();
       },
     });
@@ -275,7 +277,7 @@ function NFTBalance() {
           />
           <Input
             autoFocus
-            placeholder="Listing Price in BSC"
+            placeholder="Listing Price in MPL Token"
             onChange={(e) => setPrice(e.target.value)}
           />
           <Input

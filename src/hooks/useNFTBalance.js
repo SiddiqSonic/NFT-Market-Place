@@ -26,7 +26,7 @@ export const useNFTBalance = (options) => {
           NFT.image = resolveLink(NFT.metadata?.image);
           console.log(NFT.metadata?.image);
         } else if (NFT?.token_uri) {
-          NFT.token_uri = NFT.token_uri.replace("https://sov4nxuxgz71.usemoralis.com:2053/server/functions/getNFT?_ApplicationId=1lHRghK2KvhvHNkoKxiA9SWXsH3RxytBjsOrbqxw&id","https://fwekh9wzvkvb.usemoralis.com:2053/server/functions/getNFT?_ApplicationId=CdZGKv5yJnL12xgL7436851bq4OFjW9UsdHodRs0&id");
+         // NFT.token_uri = NFT.token_uri.replace("https://sov4nxuxgz71.usemoralis.com:2053/server/functions/getNFT?_ApplicationId=1lHRghK2KvhvHNkoKxiA9SWXsH3RxytBjsOrbqxw&id","https://fwekh9wzvkvb.usemoralis.com:2053/server/functions/getNFT?_ApplicationId=CdZGKv5yJnL12xgL7436851bq4OFjW9UsdHodRs0&id");
           try {
             await fetch(NFT.token_uri)
               .then((response) => response.json())

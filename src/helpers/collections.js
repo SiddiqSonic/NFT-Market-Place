@@ -5,7 +5,7 @@ export const networkCollections = {
       image:
         "https://sov4nxuxgz71.usemoralis.com:2053/server/files/1lHRghK2KvhvHNkoKxiA9SWXsH3RxytBjsOrbqxw/b6bc653fd5575b7a473478b58a3bc4a1_Rifle_Aim.png",
       name: "Dreax",
-      addrs: "0x33bD01A9C5d8c361FA7dF97C255C5a1504443E5F",
+      addrs: "0xcBcD639ea00e9Ee222d4847cC0318cB0f3258Ff2",
     },
   ],
 
@@ -15,7 +15,7 @@ export const networkCollections = {
       image:
         "https://sov4nxuxgz71.usemoralis.com:2053/server/files/1lHRghK2KvhvHNkoKxiA9SWXsH3RxytBjsOrbqxw/b6bc653fd5575b7a473478b58a3bc4a1_Rifle_Aim.png",
       name: "Drax",
-      addrs: "0xd57b1e431984c49807F134CBc0E43ab0E1223eA8",
+      addrs: "0x1DD7ed418cC8a7b95AB822CCc7ec8CCC44686996",
     },
   ],
 };
